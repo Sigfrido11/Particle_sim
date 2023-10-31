@@ -70,18 +70,18 @@ void Particle::SetP(double px, double py, double pz) {
 const double Particle::GetInvariantMass(Particle &other_particle) const {
   double const sum_e2 =
       std::pow(other_particle.GetEnergy(), 2) + std::pow(GetEnergy(), 2);
-  double const sum_p2 = GetModuleP() + other_particle.GetModuleP();
+  double const sum_p2 {GetModuleP() + other_particle.GetModuleP()};
   return std::sqrt(sum_e2 - sum_p2);
 }
 
 const double Particle::GetModuleP() const {
   double const p2 =
-      std::pow(GetPx(), 2) + std::pow(GetPy(), 2) + std::pow(GetPz(), 2);
+      std::pow(px_, 2) + std::pow(py_, 2) + std::pow(pz_, 2);
   return std::sqrt(p2);
 }
 
 void Particle::Print() const {
-  std::cout << indice << '\n' // non so come avere indice
+  std::cout << FindParticle(name_) << '\n' // non so come avere indice
             << "particle type name: " << name_ << '\n'
             << "linear momentum (N/kg): (" << px_ << ", " << py_ << ", " << pz_
             << ")" << '\n';
