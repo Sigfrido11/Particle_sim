@@ -209,6 +209,20 @@ p_trans->Write();
 gen_particles->Write();
 energy->Write();
 all_inv_mass->Write();
+same_charge_inv_mass->Write();
+opposite_charge_inv_mass->Write();
+pi_k_same->Write();
+pi_k_opposite->Write();
+dec_inv_mass->Write();
+
+azimuth->Draw();
+polar_angle->Draw();
+p_module->Draw();
+p_trans->Draw();
+gen_particles->Draw();
+energy->Draw();
+all_inv_mass->Draw();
+
 
 /*
   for (auto &elem : Particle::particleTypes_) {
