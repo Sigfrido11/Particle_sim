@@ -152,6 +152,7 @@ int main() {
         if (is_star) {
          p = p1;
         }
+        all_inv_mass->Fill(p.GetInvariantMass(old_particle));
         if (p.GetCharge() == old_particle.GetCharge()) { // same charge
           same_charge_inv_mass->Fill(p.GetInvariantMass(old_particle));
           bool first_cond{p.GetName() == "pion +" &&
