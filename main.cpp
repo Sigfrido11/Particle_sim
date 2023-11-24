@@ -85,8 +85,6 @@ int main() {
       Particle p1;
       Particle p2;
 
-      //std::cout << "nel ciclo all'inizio all'iterazione " << event << '\n';
-
       if (val < 0.4) {
         p.SetName("pion +");
         gen_particles->Fill(0.5);
@@ -120,11 +118,11 @@ int main() {
       else {
         p.SetName("resonance");
         is_star = true;
-        double decadence{gRandom->Rndm()};
+        double decad{gRandom->Rndm()};
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
         star_num2 += 2;
-        if (decadence < 0.5) {
+        if (decad < 0.5) {
           p1.SetName("pion +");
           p2.SetName("kaon -");
 
@@ -156,25 +154,8 @@ int main() {
       for (int compare{0}; compare < event + star_num2 / 2; compare++) {
         Particle old_particle{EventParticles[compare]};
         if (is_star) {
-          //std::cout << "p mass" << p.GetCharge()<< "\n";
-          //std::cout << "p1 mass" << p1.GetCharge()<< "\n";
-          p = p1;
-          //std::cout << "p mass" << p.GetCharge()<< "\n";
-          //std::cout << "che bello sono una star" << "\n";
+         p = p1;
         }
-
-        //std::cout << "old_particle è ben posto " << old_particle.GetMass()
-         //         << '\n';
-        
-        //std::cout << "p è ben posto " << p.GetMass()
-         //         << '\n';
-
-        //std::cout << "inv mass " << p.GetInvariantMass(old_particle) << '\n';
-        
-        all_inv_mass->Fill(p.GetInvariantMass(old_particle));
-
-        //std::cout << "nel for piccolo piccolo dopo invariant mass " << compare
-         //       << "\n";
 
         if (p.GetCharge() == old_particle.GetCharge()) { // same charge
           same_charge_inv_mass->Fill(p.GetInvariantMass(EventParticles[event]));
