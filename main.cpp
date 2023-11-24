@@ -7,68 +7,68 @@
 #include <algorithm>
 #include <cmath>
 
+#include <iterator>
+
 int main() {
   TFile *file = new TFile("histo.root", "RECREATE");
   gRandom->SetSeed(200769);
   Particle::AddParticleType("pion +", 0.13957, 1);
   Particle::AddParticleType("pion -", 0.13957, -1);
-  Particle::AddParticleType("kaon +", 0.4937, 1);
+  Particle::AddParticleType("kaon +", 0.49367, 1);
   Particle::AddParticleType("kaon -", 0.49367, -1);
   Particle::AddParticleType("proton +", 0.93827, 1);
   Particle::AddParticleType("proton -", 0.93827, -1);
   Particle::AddParticleType("resonance", 0.89166, 0, 0.050);
   std::array<Particle, 120> EventParticles{};
-  double val{0};
+  
 
   TH1F *gen_particles = new TH1F("gen_particles", "gen_particles", 7, 0, 7);
 
-  TH1F *azimuth = new TH1F("azimuth", "azimuth", 100, 0., 2 * M_PI);
+  TH1F *azimuth = new TH1F("azimuth", "azimuth", 1000, 0., 2 * M_PI);
 
-  TH1F *polar_angle = new TH1F("polar_angle", "polar_angle", 100, 0., M_PI);
+  TH1F *polar_angle = new TH1F("polar_angle", "polar_angle", 1000, 0., M_PI);
 
-  TH1F *p_module = new TH1F("p_module", "p_module", 100, 0, 5);
+  TH1F *p_module = new TH1F("p_module", "p_module", 1000, 0, 5);
 
-  TH1F *p_trans = new TH1F("p_trans", "p_trans", 100, 0, 5);
+  TH1F *p_trans = new TH1F("p_trans", "p_trans", 1000, 0, 5);
 
-  TH1F *energy = new TH1F("energy", "energy", 100, 0, 10);
+  TH1F *energy = new TH1F("energy", "energy", 1000, 0, 6);
 
   // per questi primi non serve sumw2?
 
-  TH1F *all_inv_mass = new TH1F("all_inv_mass", "all_inv_mass", 100, 0, 10);
+  TH1F *all_inv_mass = new TH1F("all_inv_mass", "all_inv_mass", 1000, 0, 10);
 
   all_inv_mass->Sumw2();
 
   TH1F *same_charge_inv_mass =
-      new TH1F("same_charge_inv_mass", "same_charge_inv_mass", 100, 0, 10);
+      new TH1F("same_charge_inv_mass", "same_charge_inv_mass", 1000, 0, 8);
 
   same_charge_inv_mass->Sumw2();
 
   TH1F *opposite_charge_inv_mass = new TH1F(
-      "opposite_charge_inv_mass", "opposite_charge_inv_mass", 100, 0, 10);
+      "opposite_charge_inv_mass", "opposite_charge_inv_mass", 1000, 0, 8);
   opposite_charge_inv_mass->Sumw2();
   TH1F *pi_k_same = new TH1F("pi_k_same_charge_inv_mass",
-                             "pi_k_same_charge_inv_mass", 100, 0, 10);
+                             "pi_k_same_charge_inv_mass", 1000, 0, 8);
   pi_k_same->Sumw2();
   TH1F *pi_k_opposite = new TH1F("pi_k_opposite_charge_inv_mass",
-                                 "pi_k_opposite_charge_inv_mass", 100, 0, 10);
+                                 "pi_k_opposite_charge_inv_mass", 1000, 0, 8);
   pi_k_opposite->Sumw2();
-  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 100, 0, 10);
+  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 1000, 0, 8);
   dec_inv_mass->Sumw2();
 
   int star_num2{0};
 
   for (int i{0}; i < 1e5; i++) {
     if (star_num2 > 20) {
-      std::cout << "too much resonance has been genarated" << '\n' << "\n";
+      std::cout << "too much k* has been genarate" << '\n';
     }
 
     star_num2 = 0;
 
-    //std::cout << "sono nel ciclone all'iterazione " << i << '\n';
-
-    for (int event{0}; event < 1e2; event++) {
+      for (int event{0}; event < 1e2; event++) {
       bool is_star{false};
-      val = gRandom->Rndm();
+      double val = gRandom->Rndm();
       double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth
       double theta = gRandom->Uniform(0., M_PI);   // polar angle
       double p_m = gRandom->Exp(1.);
@@ -85,44 +85,45 @@ int main() {
       Particle p1;
       Particle p2;
 
-      if (val < 0.4) {
+      if (val <= 0.4) {
         p.SetName("pion +");
         gen_particles->Fill(0.5);
       }
 
-      else if (val < 0.8) {
+      else if (val <= 0.8) {
         p.SetName("pion -");
         gen_particles->Fill(1.5);
       }
 
-      else if (val < 0.85) {
+      else if (val <= 0.85) {
         p.SetName("kaon +");
         gen_particles->Fill(2.5);
       }
 
-      else if (val < 0.90) {
+      else if (val <= 0.90) {
         p.SetName("kaon -");
         gen_particles->Fill(3.5);
       }
 
-      else if (val < 0.945) {
+      else if (val <= 0.945) {
         p.SetName("proton +");
         gen_particles->Fill(4.5);
       }
 
-      else if (val < 0.99) {
+      else if (val <= 0.99) {
         p.SetName("proton -");
         gen_particles->Fill(5.5);
       }
 
       else {
         p.SetName("resonance");
+        gen_particles->Fill(6.5);
         is_star = true;
         double decad{gRandom->Rndm()};
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
         star_num2 += 2;
-        if (decad < 0.5) {
+        if (decad <= 0.5) {
           p1.SetName("pion +");
           p2.SetName("kaon -");
 
@@ -132,10 +133,9 @@ int main() {
         }
         int all_good{p.Decay2Body(p1, p2)};
         if (all_good != 0) {
-          //std::cout << "something went wrong during decay" << '\n' << "\n";
+          std::cout << "something went wrong during decay" << '\n' << "\n";
         } else {
-         // std::cout <<"qui le due decadute vanno"<< p1.GetInvariantMass(p2) <<'\n';
-          dec_inv_mass->Fill(p1.GetInvariantMass(p2));
+           dec_inv_mass->Fill(p1.GetInvariantMass(p2));
         }
       }
       if (!is_star) {
@@ -143,11 +143,7 @@ int main() {
         energy->Fill(p.GetEnergy());
         EventParticles[event + star_num2 / 2] = p;
       } else {
-
-        //std::cout << "somma" << event + 1 + star_num2 / 2 << '\n';
-        //std::cout<< "sono p1 e sono valido " << p1.GetCharge() << '\n';
         EventParticles[event + 1 + star_num2 / 2] = p1;
-        //std::cout << "p mass deuhduhfnui" << p1.GetCharge()<< "\n";
         EventParticles[event + star_num2 / 2] = p2;
       }
 
@@ -156,9 +152,8 @@ int main() {
         if (is_star) {
          p = p1;
         }
-
         if (p.GetCharge() == old_particle.GetCharge()) { // same charge
-          same_charge_inv_mass->Fill(p.GetInvariantMass(EventParticles[event]));
+          same_charge_inv_mass->Fill(p.GetInvariantMass(old_particle));
           bool first_cond{p.GetName() == "pion +" &&
                           old_particle.GetName() == "kaon +"};
           bool second_cond{p.GetName() == "pion -" &&
@@ -168,7 +163,7 @@ int main() {
           }
         } else { // different charge
           opposite_charge_inv_mass->Fill(
-              p.GetInvariantMass(EventParticles[event]));
+              p.GetInvariantMass(old_particle));
           bool first_cond{p.GetName() == "pion +" &&
                           old_particle.GetName() == "kaon -"};
           bool second_cond{p.GetName() == "pion -" &&
@@ -177,10 +172,16 @@ int main() {
             pi_k_opposite->Fill(p.GetInvariantMass(old_particle));
           }
         }
-       // std::cout << "nel for piccolo piccolo alla fine sono arrivato "
-         //         << compare << "\n";
       }
     }
+   /* auto pos= std::find(EventParticles.begin(), EventParticles.end(), 0);
+    int distance = std::distance(EventParticles.end(), EventParticles.begin());
+    if(distance <= 100 ){
+      std::cout<<"l'array ha dei buchi" << "\n";
+    }
+    std::fill(EventParticles.begin(), EventParticles.end(),0);
+    */
+   //devi farlo funzionare per maggiore sicurezza
   } 
 
 azimuth->Write();
@@ -196,13 +197,7 @@ pi_k_same->Write();
 pi_k_opposite->Write();
 dec_inv_mass->Write();
 
-azimuth->Draw();
-polar_angle->Draw();
-p_module->Draw();
-p_trans->Draw();
-gen_particles->Draw();
-energy->Draw();
-all_inv_mass->Draw();
+dec_inv_mass->Draw();
 
 
 /*

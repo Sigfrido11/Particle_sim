@@ -45,10 +45,13 @@ const double Particle::GetEnergy() const {
   return std::sqrt(m2 + p2);
 }
 
-const double Particle::GetInvariantMass(Particle &other_particle) const {
+const double Particle::GetInvariantMass(Particle & other_dau) const {
   double const sum_e2{
-      std::pow(other_particle.GetEnergy() + GetEnergy(), 2)};
-  double const sum_p2{std::pow(GetModuleP() + other_particle.GetModuleP(),2)};
+   std::pow(other_dau.GetEnergy() + GetEnergy(), 2)};
+  double const pxtot = GetPx()+ other_dau.GetPx();
+  double const pytot = GetPy()+ other_dau.GetPy();
+  double const pztot = GetPz()+ other_dau.GetPz();
+  double const sum_p2{std::pow(pxtot,2) + std::pow(pytot,2) + std::pow(pztot,2)};
   if (sum_e2 < sum_p2){
     std::cout << "error in the energy distribution" << "\n";
   }
