@@ -8,7 +8,7 @@
 // inizializzazione membri statici
 int const Particle::maxNumParticleType_ = 10;
 int Particle::NParticleType_ = 0;
-//std::unordered_map<std::string, ParticleType *> Particle::particleTypes_;
+std::unordered_map<std::string, ParticleType *> Particle::particleTypes_;
 
 // costruttori
 Particle::Particle(){};

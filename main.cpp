@@ -1,17 +1,16 @@
-#include "TFile.h"
-#include "TH1.h"
-#include "TRandom.h"
 #include "particle.h"
 #include "particletype.h"
 #include "resonancetype.h"
 #include <algorithm>
 #include <cmath>
-
 #include <iterator>
+#include "TFile.h"
+#include "TH1.h"
+#include "TRandom.h"
 
 int main() {
   TFile *file = new TFile("histo.root", "RECREATE");
-  gRandom->SetSeed(200769);
+  gRandom->SetSeed(2007);
   Particle::AddParticleType("pion +", 0.13957, 1);
   Particle::AddParticleType("pion -", 0.13957, -1);
   Particle::AddParticleType("kaon +", 0.49367, 1);
@@ -63,10 +62,10 @@ int main() {
     if (star_num2 > 20) {
       std::cout << "too much k* has been genarate" << '\n';
     }
-
     star_num2 = 0;
+    int num =0;
 
-      for (int event{0}; event < 1e2; event++) {
+      for (int event{0}; event <= 1e2; event++) { // da cambiare
       bool is_star{false};
       double val = gRandom->Rndm();
       double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth
@@ -141,13 +140,13 @@ int main() {
       if (!is_star) {
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
-        EventParticles[event + star_num2 / 2] = p;
+        EventParticles[event + star_num2/2] = p;
       } else {
-        EventParticles[event + 1 + star_num2 / 2] = p1;
-        EventParticles[event + star_num2 / 2] = p2;
+        EventParticles[event + star_num2/2] = p1;
+        EventParticles[event - 1 + star_num2/2] = p2;
       }
 
-      for (int compare{0}; compare < event + star_num2 / 2; compare++) {
+      for (int compare{0}; compare < event + star_num2/2; compare++) {
         Particle old_particle{EventParticles[compare]};
         if (is_star) {
         p = p1;
@@ -175,15 +174,7 @@ int main() {
         }
       }
     }
-   /* auto pos= std::find(EventParticles.begin(), EventParticles.end(), 0);
-    int distance = std::distance(EventParticles.end(), EventParticles.begin());
-    if(distance <= 100 ){
-      std::cout<<"l'array ha dei buchi" << "\n";
-    }
-    std::fill(EventParticles.begin(), EventParticles.end(),0);
-    */
-   //devi farlo funzionare per maggiore sicurezza
-  } 
+} 
 
 azimuth->Write();
 polar_angle->Write();
