@@ -3,7 +3,6 @@
 void analyse() {
 
   TFile *file = new TFile("histo.root");
-
   TH1F *gen_particles = (TH1F *)file->Get("gen_particles");
   TH1F *azimuth = (TH1F *)file->Get("azimuth");
   TH1F *polar_angle = (TH1F *)file->Get("polar_angle");
@@ -17,6 +16,13 @@ void analyse() {
   TH1F *pi_k_same = (TH1F *)file->Get("pi_k_same_charge_inv_mass");
   TH1F *pi_k_opposite = (TH1F *)file->Get("pi_k_opposite_charge_inv_mass");
   TH1F *dec_inv_mass = (TH1F *)file->Get("dec_inv_mass");
+
+  all_inv_mass->Sumw2();
+  same_charge_inv_mass->Sumw2();
+  opposite_charge_inv_mass->Sumw2();
+  pi_k_same->Sumw2();
+  pi_k_opposite->Sumw2();
+  dec_inv_mass->Sumw2();
 
   if (gen_particles->GetEntries() == 1e7) {
     std::cout << "entries in gen particles histo: ok" << '\n';

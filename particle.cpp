@@ -47,7 +47,7 @@ const double Particle::GetEnergy() const {
 
 const double Particle::GetInvariantMass(Particle & other_dau) const {
   double const sum_e2{
-   std::pow(other_dau.GetEnergy() + GetEnergy(), 2)};
+  std::pow(other_dau.GetEnergy() + GetEnergy(), 2)};
   double const pxtot = GetPx()+ other_dau.GetPx();
   double const pytot = GetPy()+ other_dau.GetPy();
   double const pztot = GetPz()+ other_dau.GetPz();

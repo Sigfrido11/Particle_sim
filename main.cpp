@@ -36,25 +36,25 @@ int main() {
 
   // per questi primi non serve sumw2?
 
-  TH1F *all_inv_mass = new TH1F("all_inv_mass", "all_inv_mass", 1000, 0, 10);
+  TH1F *all_inv_mass = new TH1F("all_inv_mass", "all_inv_mass", 1000, 0, 6);
 
   all_inv_mass->Sumw2();
 
   TH1F *same_charge_inv_mass =
-      new TH1F("same_charge_inv_mass", "same_charge_inv_mass", 1000, 0, 8);
+      new TH1F("same_charge_inv_mass", "same_charge_inv_mass", 1000, 0, 6);
 
   same_charge_inv_mass->Sumw2();
 
   TH1F *opposite_charge_inv_mass = new TH1F(
-      "opposite_charge_inv_mass", "opposite_charge_inv_mass", 1000, 0, 8);
+      "opposite_charge_inv_mass", "opposite_charge_inv_mass", 1000, 0, 6);
   opposite_charge_inv_mass->Sumw2();
   TH1F *pi_k_same = new TH1F("pi_k_same_charge_inv_mass",
-                             "pi_k_same_charge_inv_mass", 1000, 0, 8);
+                             "pi_k_same_charge_inv_mass", 1000, 0, 6);
   pi_k_same->Sumw2();
   TH1F *pi_k_opposite = new TH1F("pi_k_opposite_charge_inv_mass",
-                                 "pi_k_opposite_charge_inv_mass", 1000, 0, 8);
+                                 "pi_k_opposite_charge_inv_mass", 1000, 0, 6);
   pi_k_opposite->Sumw2();
-  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 1000, 0, 8);
+  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 1000, 0, 6);
   dec_inv_mass->Sumw2();
 
   int star_num2{0};
@@ -150,7 +150,7 @@ int main() {
       for (int compare{0}; compare < event + star_num2 / 2; compare++) {
         Particle old_particle{EventParticles[compare]};
         if (is_star) {
-         p = p1;
+        p = p1;
         }
         all_inv_mass->Fill(p.GetInvariantMass(old_particle));
         if (p.GetCharge() == old_particle.GetCharge()) { // same charge
@@ -197,8 +197,50 @@ opposite_charge_inv_mass->Write();
 pi_k_same->Write();
 pi_k_opposite->Write();
 dec_inv_mass->Write();
-
 dec_inv_mass->Draw();
+
+
+  TCanvas *c[12];
+  for (int i{}; i < 14; i++) {
+    c[i] = new TCanvas("c" + i, "histo", 200, 10, 600, 400);
+  }
+  c[0]->cd(0);
+  gen_particles->Draw("HEP");
+  c[0]->Print("gen_particles.pdf");
+  c[0]->Print("gen_particles.C");
+  c[0]->Print("gen_particles.root");
+  c[1]->cd(0);
+  all_inv_mass->Draw("HEP");
+  c[6]->Print("invariant_mass_all.pdf");
+  c[6]->Print("invariant_mass_all.C");
+  c[6]->Print("invariant_mass_all.root");
+  c[7]->cd(0);
+  same_charge_inv_mass->Draw("HEP");
+  c[7]->Print("invariant_mass_same_charge.pdf");
+  c[7]->Print("invariant_mass_same_charge.C");
+  c[7]->Print("invariant_mass_same_charge.root");
+  c[8]->cd(0);
+  opposite_charge_inv_mass->Draw("HEP");
+  c[8]->Print("invariant_mass_opposite_charge.pdf");
+  c[8]->Print("invariant_mass_opposite_charge.C");
+  c[8]->Print("invariant_mass_opposite_charge.root");
+  c[9]->cd(0);
+  pi_k_same->Draw("HEP");
+  c[9]->Print("invariant_mass_pi_k_same_charge.pdf");
+  c[9]->Print("invariant_mass_pi_k_same_charge.C");
+  c[9]->Print("invariant_mass_pi_k_same_charge.root");
+  c[10]->cd(0);
+  pi_k_opposite->Draw("HEP");
+  c[10]->Print("invariant_mass_pi_k_opposite_charge.pdf");
+  c[10]->Print("invariant_mass_pi_k_opposite_charge.C");
+  c[10]->Print("invariant_mass_pi_k_opposite_charge.root");
+  c[11]->cd(0);
+  dec_inv_mass->Draw("HEP");
+  c[11]->Print("invariant_mass_decay_product.pdf");
+  c[11]->Print("invariant_mass_decay_product.C");
+  c[11]->Print("invariant_mass_decay_product.root");
+  c[12]->cd(0);
+
 
 
 /*
