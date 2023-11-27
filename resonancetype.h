@@ -9,7 +9,7 @@ class ResonanceType final : public ParticleType {
 public:
   virtual void Print() const override;
 
-  const double GetWidth() const override;
+   double GetWidth() const override;
 
   ResonanceType(std::string name, double mass, int charge, double width);
 

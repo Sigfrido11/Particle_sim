@@ -9,4 +9,4 @@ void ResonanceType::Print() const {
   std::cout << "width: " << width_ << '\n';
 }
 
-double const ResonanceType::GetWidth() const { return width_; }
+double ResonanceType::GetWidth() const { return width_; }

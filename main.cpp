@@ -7,8 +7,10 @@
 #include "TFile.h"
 #include "TH1.h"
 #include "TRandom.h"
+#include <TCanvas.h>
 
 int main() {
+  TH1::AddDirectory(kFALSE);
   TFile *file = new TFile("histo.root", "RECREATE");
   gRandom->SetSeed(2007);
   Particle::AddParticleType("pion +", 0.13957, 1);
@@ -63,9 +65,8 @@ int main() {
       std::cout << "too much k* has been genarate" << '\n';
     }
     star_num2 = 0;
-    int num =0;
 
-      for (int event{0}; event <= 1e2; event++) { // da cambiare
+      for (int event{0}; event < 1e2; event++) { // da cambiare
       bool is_star{false};
       double val = gRandom->Rndm();
       double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth
@@ -188,10 +189,9 @@ opposite_charge_inv_mass->Write();
 pi_k_same->Write();
 pi_k_opposite->Write();
 dec_inv_mass->Write();
-dec_inv_mass->Draw();
+//tolto qui un dec_inv_mass->draw(), errato credo
 
-
-  TCanvas *c[12];
+/*  TCanvas *c[14];
   for (int i{}; i < 14; i++) {
     c[i] = new TCanvas("c" + i, "histo", 200, 10, 600, 400);
   }
@@ -231,7 +231,11 @@ dec_inv_mass->Draw();
   c[11]->Print("invariant_mass_decay_product.C");
   c[11]->Print("invariant_mass_decay_product.root");
   c[12]->cd(0);
+*/
 
+// credo fosse non richiesta la parte di draw o di salvare su vari file
+// mi rendo conto che la ragione di questa aggiunta era probabilmente
+// la non disponabilità al tempo di analyse
 
 
 /*
@@ -239,4 +243,6 @@ dec_inv_mass->Draw();
     elem.second->delete();
   }
   */
+ file->Close();
+
 }

@@ -14,14 +14,14 @@ public:
   Particle();
   Particle(std::string name, double px, double py, double pz);
 
-  const std::string GetName() const;
-  const double GetPx() const;
-  const double GetPy() const;
-  const double GetPz() const;
-  const double GetMass() const;
-  const int GetCharge() const;
-  const double GetEnergy() const;
-  const double GetInvariantMass(Particle& other_particle) const;
+   std::string GetName() const;
+   double GetPx() const;
+   double GetPy() const;
+   double GetPz() const;
+   double GetMass() const;
+   int GetCharge() const;
+   double GetEnergy() const;
+   double GetInvariantMass(Particle& other_particle) const;
 
   void SetName(std::string new_name);
   void SetP(double px,double py,double pz);
@@ -41,8 +41,8 @@ private:
   double py_;
   double pz_;
 
-  const int FindParticle(std::string name) const;
-  const double GetModuleP() const;
+   int FindParticle(std::string name) const;
+   double GetModuleP() const;
 
   void Boost(double bx, double by, double bz);
 };

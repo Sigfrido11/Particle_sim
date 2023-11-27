@@ -3,12 +3,13 @@
 
 #include <string>
 
-class ParticleType {
+class ParticleType
+{
 public:
-  const std::string GetName() const; // forse si può togliere
-  const double GetMass() const;
-  const int GetCharge() const;
-  virtual const double GetWidth() const;
+  std::string GetName() const; // forse si può togliere
+  double GetMass() const;
+  int GetCharge() const;
+  virtual double GetWidth() const;
   virtual void Print() const;
   explicit ParticleType(std::string name, double mass, int charge);
 

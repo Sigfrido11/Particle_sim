@@ -23,29 +23,29 @@ Particle::Particle(std::string name, double px = 0, double py = 0,
 }
 
 // Getters
-const std::string Particle::GetName() const { return name_; }
+ std::string Particle::GetName() const { return name_; }
 
-const double Particle::GetPx() const { return px_; }
-const double Particle::GetPy() const { return py_; }
-const double Particle::GetPz() const { return pz_; }
+ double Particle::GetPx() const { return px_; }
+ double Particle::GetPy() const { return py_; }
+ double Particle::GetPz() const { return pz_; }
 
-const double Particle::GetMass() const {
+ double Particle::GetMass() const {
   auto search = particleTypes_.find(name_);
   return search->second->GetMass();
 }
 
-const int Particle::GetCharge() const { 
+ int Particle::GetCharge() const { 
   auto search = particleTypes_.find(name_);
   return search->second->GetCharge();
 }
 
-const double Particle::GetEnergy() const {
+ double Particle::GetEnergy() const {
   double const m2 = std::pow(GetMass(), 2);
   double const p2 = std::pow(GetModuleP(), 2);
   return std::sqrt(m2 + p2);
 }
 
-const double Particle::GetInvariantMass(Particle & other_dau) const {
+ double Particle::GetInvariantMass(Particle & other_dau) const {
   double const sum_e2{
   std::pow(other_dau.GetEnergy() + GetEnergy(), 2)};
   double const pxtot = GetPx()+ other_dau.GetPx();
@@ -58,7 +58,7 @@ const double Particle::GetInvariantMass(Particle & other_dau) const {
   return std::sqrt(sum_e2 - sum_p2);
 }
 
-const double Particle::GetModuleP() const {
+ double Particle::GetModuleP() const {
   double const p2 = std::pow(px_, 2) + std::pow(py_, 2) + std::pow(pz_, 2);
   return std::sqrt(p2);
 }
@@ -188,6 +188,6 @@ void Particle::PrintAllTypes() {
                 });
 }
 
-const int Particle::FindParticle(std::string name) const {
+ int Particle::FindParticle(std::string name) const {
   return std::distance(particleTypes_.begin(), particleTypes_.find(name));
 }

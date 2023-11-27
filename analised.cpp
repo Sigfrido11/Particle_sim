@@ -1,7 +1,8 @@
 #include <iostream>
 
-void analyse() {
-
+void analyse()
+{
+  TH1::AddDirectory(kFALSE);
   TFile *file = new TFile("histo.root");
   TH1F *gen_particles = (TH1F *)file->Get("gen_particles");
   TH1F *azimuth = (TH1F *)file->Get("azimuth");
@@ -24,128 +25,185 @@ void analyse() {
   pi_k_opposite->Sumw2();
   dec_inv_mass->Sumw2();
 
-  if (gen_particles->GetEntries() == 1e7) {
+  if (gen_particles->GetEntries() == 1e7)
+  {
     std::cout << "entries in gen particles histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in gen particles histo: unexpected value" << '\n';
   }
-  if (azimuth->GetEntries() == 1e7) {
+  if (azimuth->GetEntries() == 1e7)
+  {
     std::cout << "entries in azimuth histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in azimuth histo: unexpected value" << '\n';
   }
-  if (polar_angle->GetEntries() == 1e7) {
+  if (polar_angle->GetEntries() == 1e7)
+  {
     std::cout << "entries in polar angle histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in polar angle histo: unexpected value" << '\n';
   }
-  if (p_module->GetEntries() == 1e7) {
+  if (p_module->GetEntries() == 1e7)
+  {
     std::cout << "entries in p module histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in p module histo: unexpected value" << '\n';
   }
-  if (p_trans->GetEntries() == 1e7) {
+  if (p_trans->GetEntries() == 1e7)
+  {
     std::cout << "entries in p trans histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in p trans histo: unexpected value" << '\n';
   }
-  if (energy->GetEntries() == 1e7) {
+  if (energy->GetEntries() == 1e7)
+  {
     std::cout << "entries in energy histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in energy histo: unexpected value" << '\n';
   }
   if (all_inv_mass->GetEntries() < 1e5 * 60 * 119 &&
-      all_inv_mass->GetEntries() > 1e5 * 40 * 79) {
+      all_inv_mass->GetEntries() > 1e5 * 40 * 79)
+  {
     std::cout << "entries in gen particles histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in gen particles histo: unexpected value" << '\n';
   }
   if (same_charge_inv_mass->GetEntries() < 1e5 * 40 * 119 &&
-      same_charge_inv_mass->GetEntries() > 1e5 * 30 * 79) {
+      same_charge_inv_mass->GetEntries() > 1e5 * 30 * 79)
+  {
     std::cout << "entries in same charge inv mass histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in same charge inv mass histo: unexpected value"
               << '\n';
   }
   if (opposite_charge_inv_mass->GetEntries() < 1e5 * 40 * 119 &&
-      opposite_charge_inv_mass->GetEntries() > 1e5 * 30 * 79) {
+      opposite_charge_inv_mass->GetEntries() > 1e5 * 30 * 79)
+  {
     std::cout << "entries in opposite charge inv mass histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in opposite charge inv mass histo: unexpected value"
               << '\n';
   }
   if (pi_k_same->GetEntries() < 1e5 * 30 * 119 &&
-      pi_k_same->GetEntries() > 1e5 * 20 * 79) {
+      pi_k_same->GetEntries() > 1e5 * 20 * 79)
+  {
     std::cout << "entries in pi k same histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in pi k same histo: unexpected value" << '\n';
   }
   if (pi_k_opposite->GetEntries() < 1e5 * 30 * 119 &&
-      pi_k_opposite->GetEntries() > 1e5 * 20 * 79) {
+      pi_k_opposite->GetEntries() > 1e5 * 20 * 79)
+  {
     std::cout << "entries in pi k opposite histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in pi k opposite histo: unexpected value" << '\n';
   }
-  if (dec_inv_mass->GetEntries() < 1e6 && dec_inv_mass->GetEntries() > 1e4) {
+  if (dec_inv_mass->GetEntries() < 1e6 && dec_inv_mass->GetEntries() > 1e4)
+  {
     std::cout << "entries in dec inv mass histo: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "entries in dec inv mass histo: unexpected value" << '\n';
   }
 
   if (gen_particles->GetBinContent(1) - gen_particles->GetBinError(1) <=
           gen_particles->GetEntries() * 0.4 &&
       gen_particles->GetBinContent(1) + gen_particles->GetBinError(1) >=
-          gen_particles->GetEntries() * 0.4) {
+          gen_particles->GetEntries() * 0.4)
+  {
     std::cout << "n pi+: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n pi+: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(2) - gen_particles->GetBinError(2) <=
           gen_particles->GetEntries() * 0.4 &&
       gen_particles->GetBinContent(2) + gen_particles->GetBinError(2) >=
-          gen_particles->GetEntries() * 0.4) {
+          gen_particles->GetEntries() * 0.4)
+  {
     std::cout << "n pi-: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n pi-: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(3) - gen_particles->GetBinError(3) <=
           gen_particles->GetEntries() * 0.05 &&
       gen_particles->GetBinContent(3) + gen_particles->GetBinError(3) >=
-          gen_particles->GetEntries() * 0.05) {
+          gen_particles->GetEntries() * 0.05)
+  {
     std::cout << "n k+: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n k+: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(4) - gen_particles->GetBinError(4) <=
           gen_particles->GetEntries() * 0.05 &&
       gen_particles->GetBinContent(4) + gen_particles->GetBinError(4) >=
-          gen_particles->GetEntries() * 0.05) {
+          gen_particles->GetEntries() * 0.05)
+  {
     std::cout << "n k-: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n k-: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(5) - gen_particles->GetBinError(5) <=
           gen_particles->GetEntries() * 0.045 &&
       gen_particles->GetBinContent(5) + gen_particles->GetBinError(5) >=
-          gen_particles->GetEntries() * 0.045) {
+          gen_particles->GetEntries() * 0.045)
+  {
     std::cout << "n p+: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n p+: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(6) - gen_particles->GetBinError(6) <=
           gen_particles->GetEntries() * 0.045 &&
       gen_particles->GetBinContent(6) + gen_particles->GetBinError(6) >=
-          gen_particles->GetEntries() * 0.045) {
+          gen_particles->GetEntries() * 0.045)
+  {
     std::cout << "n p-: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n p-: unexpected" << '\n';
   }
   if (gen_particles->GetBinContent(7) - gen_particles->GetBinError(7) <=
           gen_particles->GetEntries() * 0.01 &&
       gen_particles->GetBinContent(7) + gen_particles->GetBinError(7) >=
-          gen_particles->GetEntries() * 0.01) {
+          gen_particles->GetEntries() * 0.01)
+  {
     std::cout << "n k*: ok" << '\n';
-  } else {
+  }
+  else
+  {
     std::cout << "n k*: unexpected" << '\n';
   }
 
@@ -164,10 +222,12 @@ void analyse() {
   f1 = new TF1("f2", "expo(0)", 0, 1);
   p_module->Fit(f1);
   if ((f1->GetParameter(1) - 1) / f1->GetParError(1) < 2 &&
-      (f1->GetParameter(1) - 1)/ f1->GetParError(1)>-2) {
-      std::cout << "p module distrution is as expexted" << '\n';
-    }
-  else {
+      (f1->GetParameter(1) - 1) / f1->GetParError(1) > -2)
+  {
+    std::cout << "p module distrution is as expexted" << '\n';
+  }
+  else
+  {
     std::cout << "unexpexted results for p module distriution" << '\n';
   }
   std::cout << "p module: expo fit parameter: " << f1->GetParameter(1) << "+/-"
@@ -231,8 +291,13 @@ void analyse() {
   */
 
   TCanvas *c[14];
-  for (int i{}; i < 14; i++) {
-    c[i] = new TCanvas("c" + i, "histo", 200, 10, 600, 400);
+  for (int i{}; i < 14; i++)
+  {
+    c[i] = new TCanvas("c", "histo", 200, 10, 600, 400);
+    //
+    // c'era un modo per chiamare le canvas con l'indice del loop???
+    //
+    // nota: credo che così non vada assolutamente bene
   }
   c[0]->cd(0);
   gen_particles->Draw("HEP");
@@ -305,4 +370,21 @@ void analyse() {
   c[13]->Print("invariant_mass_pi_k_opposite_minus_same.C");
   c[13]->Print("invariant_mass_pi_k_opposite_minus_same.root");
 
+//impostando lavoro per 5 canvas
+
+  TCanvas *c1 = new TCanvas("c1", "n gen, p module and angles", 200, 10, 600, 400);
+  c1->Divide(2, 2);
+  TCanvas *c2 = new TCanvas("c2", "p trans", 200, 10, 600, 400);
+
+  TCanvas *c3 = new TCanvas("c3", "energy and all inv mass", 200, 10, 600, 400);
+  c3->Divide(1, 2);
+  TCanvas *c4 = new TCanvas("c4", "inv mass same and opposite (all and pi-k)", 200, 10, 600, 400);
+  c4->Divide(2, 2);
+  TCanvas *c5 = new TCanvas("c5", "invariant mass from decay and differences", 200, 10, 600, 400);
+  c5->Divide(1, 3);
+
+//
+
+  file->Close();
 }
+//PROBABILMENTE NOME SBAGLIATO HISTO FITTATI
