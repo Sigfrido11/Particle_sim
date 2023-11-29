@@ -17,13 +17,7 @@ void analyse()
   TH1F *pi_k_same = (TH1F *)file->Get("pi_k_same_charge_inv_mass");
   TH1F *pi_k_opposite = (TH1F *)file->Get("pi_k_opposite_charge_inv_mass");
   TH1F *dec_inv_mass = (TH1F *)file->Get("dec_inv_mass");
-
-  all_inv_mass->Sumw2();
-  same_charge_inv_mass->Sumw2();
-  opposite_charge_inv_mass->Sumw2();
-  pi_k_same->Sumw2();
-  pi_k_opposite->Sumw2();
-  dec_inv_mass->Sumw2();
+  file->Close();
 
   if (gen_particles->GetEntries() == 1e7)
   {
@@ -257,12 +251,12 @@ void analyse()
   TH1F *diff = new TH1F(*opposite_charge_inv_mass);
   diff->Add(same_charge_inv_mass, -1.);
   TH1F *diff_p_k = new TH1F(*pi_k_opposite);
-  diff->Add(pi_k_same, -1);
-  opposite_charge_inv_mass->GetMaximumBin();
+  diff_p_k->Add(pi_k_same, -1);
+  diff->GetMaximumBin();
   diff_p_k->GetMaximumBin();
   dec_inv_mass->GetMaximumBin();
   f1 = new TF1("f3", "gaus(0)", 0, 10);
-  opposite_charge_inv_mass->Fit(f1);
+  diff->Fit(f1);
   std::cout << "from difference opposite and same charge inv mass: " << '\n'
             << "k* mass: " << f1->GetParameter(1) << "+/-" << f1->GetParError(1)
             << '\n'
@@ -271,7 +265,7 @@ void analyse()
             << f1->GetParError(2) << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
-  pi_k_opposite->Fit(f1);
+  diff_p_k->Fit(f1);
   std::cout
       << "from difference opposite and same charge pions and kaons inv mass: "
       << '\n'
@@ -290,101 +284,64 @@ void analyse()
   salverete in formato .pdf (o altro formato grafico), .C,.root
   */
 
-  TCanvas *c[14];
-  for (int i{}; i < 14; i++)
-  {
-    c[i] = new TCanvas("c", "histo", 200, 10, 600, 400);
-    //
-    // c'era un modo per chiamare le canvas con l'indice del loop???
-    //
-    // nota: credo che così non vada assolutamente bene
-  }
-  c[0]->cd(0);
-  gen_particles->Draw("HEP");
-  c[0]->Print("gen_particles.pdf");
-  c[0]->Print("gen_particles.C");
-  c[0]->Print("gen_particles.root");
-  c[1]->cd(0);
-  azimuth->Draw("HEP");
-  c[1]->Print("azimuth.pdf");
-  c[1]->Print("azimuth.C");
-  c[1]->Print("azimuth.root");
-  c[2]->cd(0);
-  polar_angle->Draw("HEP");
-  c[2]->Print("polar_angle.pdf");
-  c[2]->Print("polar_angle.C");
-  c[2]->Print("polar_angle.root");
-  c[3]->cd(0);
-  p_module->Draw("HEP");
-  c[3]->Print("p_module.pdf");
-  c[3]->Print("p_module.C");
-  c[3]->Print("p_module.root");
-  c[4]->cd(0);
-  p_trans->Draw("HEP");
-  c[4]->Print("p_transverse.pdf");
-  c[4]->Print("p_transverse.C");
-  c[4]->Print("p_transverse.root");
-  c[5]->cd(0);
-  energy->Draw("HEP");
-  c[5]->Print("energy.pdf");
-  c[5]->Print("energy.C");
-  c[5]->Print("energy.root");
-  c[6]->cd(0);
-  all_inv_mass->Draw("HEP");
-  c[6]->Print("invariant_mass_all.pdf");
-  c[6]->Print("invariant_mass_all.C");
-  c[6]->Print("invariant_mass_all.root");
-  c[7]->cd(0);
-  same_charge_inv_mass->Draw("HEP");
-  c[7]->Print("invariant_mass_same_charge.pdf");
-  c[7]->Print("invariant_mass_same_charge.C");
-  c[7]->Print("invariant_mass_same_charge.root");
-  c[8]->cd(0);
-  opposite_charge_inv_mass->Draw("HEP");
-  c[8]->Print("invariant_mass_opposite_charge.pdf");
-  c[8]->Print("invariant_mass_opposite_charge.C");
-  c[8]->Print("invariant_mass_opposite_charge.root");
-  c[9]->cd(0);
-  pi_k_same->Draw("HEP");
-  c[9]->Print("invariant_mass_pi_k_same_charge.pdf");
-  c[9]->Print("invariant_mass_pi_k_same_charge.C");
-  c[9]->Print("invariant_mass_pi_k_same_charge.root");
-  c[10]->cd(0);
-  pi_k_opposite->Draw("HEP");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.pdf");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.C");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.root");
-  c[11]->cd(0);
-  dec_inv_mass->Draw("HEP");
-  c[11]->Print("invariant_mass_decay_product.pdf");
-  c[11]->Print("invariant_mass_decay_product.C");
-  c[11]->Print("invariant_mass_decay_product.root");
-  c[12]->cd(0);
-  diff->Draw("HEP");
-  c[12]->Print("invariant_mass_opposite_minus_same.pdf");
-  c[12]->Print("invariant_mass_opposite_minus_same.C");
-  c[12]->Print("invariant_mass_opposite_minus_same.root");
-  c[13]->cd(0);
-  diff_p_k->Draw("HEP");
-  c[13]->Print("invariant_mass_pi_k_opposite_minus_same.pdf");
-  c[13]->Print("invariant_mass_pi_k_opposite_minus_same.C");
-  c[13]->Print("invariant_mass_pi_k_opposite_minus_same.root");
-
-//impostando lavoro per 5 canvas
+  // impostando lavoro per 5 canvas
 
   TCanvas *c1 = new TCanvas("c1", "n gen, p module and angles", 200, 10, 600, 400);
   c1->Divide(2, 2);
+  c1->cd(1);
+  gen_particles->Draw("HEP");
+  c1->cd(2);
+  p_module->Draw("HEP");
+  c1->cd(3);
+  azimuth->Draw("HEP");
+  c1->cd(4);
+  polar_angle->Draw("HEP");
+  c1->Print("N_P_Angles.pdf");
+  c1->Print("N_P_Angles.C");
+  c1->Print("N_P_Angles.root");
+
   TCanvas *c2 = new TCanvas("c2", "p trans", 200, 10, 600, 400);
+  p_trans->Draw("HEP");
+  c2->Print("PTrans.pdf");
+  c2->Print("PTrans.C");
+  c2->Print("PTrans.root");
 
   TCanvas *c3 = new TCanvas("c3", "energy and all inv mass", 200, 10, 600, 400);
   c3->Divide(1, 2);
+  c3->cd(1);
+  energy->Draw("HEP");
+  c3->cd(2);
+  all_inv_mass->Draw("HEP");
+  c3->Print("Energy_AllInvMass.pdf");
+  c3->Print("Energy_AllInvMass.C");
+  c3->Print("Energy_AllInvMass.root");
+
   TCanvas *c4 = new TCanvas("c4", "inv mass same and opposite (all and pi-k)", 200, 10, 600, 400);
   c4->Divide(2, 2);
+  c4->cd(1);
+  same_charge_inv_mass->Draw("HEP");
+  c4->cd(2);
+  opposite_charge_inv_mass->Draw("HEP");
+  c4->cd(3);
+  pi_k_same->Draw("HEP");
+  c4->cd(4);
+  pi_k_opposite->Draw("HEP");
+  c4->Print("InvMassSameOpposite.pdf");
+  c4->Print("InvMassSameOpposite.C");
+  c4->Print("InvMassSameOpposite.root");
+
   TCanvas *c5 = new TCanvas("c5", "invariant mass from decay and differences", 200, 10, 600, 400);
   c5->Divide(1, 3);
+  c5->cd(1);
+  dec_inv_mass->Draw("HEP");
+  c5->cd(2);
+  diff->Draw("HEP");
+  c5->cd(3);
+  diff_p_k->Draw("HEP");
+  c5->Print("Decay_Diffs.pdf");
+  c5->Print("Decay_Diffs.C");
+  c5->Print("Decay_Diffs.root");
 
-//
-
-  file->Close();
+  //
 }
-//PROBABILMENTE NOME SBAGLIATO HISTO FITTATI
+// PROBABILMENTE NOME SBAGLIATO HISTO FITTATI
