@@ -1,13 +1,13 @@
-#include "particle.h"
-#include "particletype.h"
-#include "resonancetype.h"
+#include <TCanvas.h>
 #include <algorithm>
 #include <cmath>
 #include <iterator>
 #include "TFile.h"
 #include "TH1.h"
 #include "TRandom.h"
-#include <TCanvas.h>
+#include "particle.h"
+#include "particletype.h"
+#include "resonancetype.h"
 
 int main() {
   TH1::AddDirectory(kFALSE);
@@ -21,7 +21,6 @@ int main() {
   Particle::AddParticleType("proton -", 0.93827, -1);
   Particle::AddParticleType("resonance", 0.89166, 0, 0.050);
   std::array<Particle, 120> EventParticles{};
-  
 
   TH1F *gen_particles = new TH1F("gen_particles", "gen_particles", 7, 0, 7);
 
@@ -34,8 +33,6 @@ int main() {
   TH1F *p_trans = new TH1F("p_trans", "p_trans", 1000, 0, 5);
 
   TH1F *energy = new TH1F("energy", "energy", 1000, 0, 6);
-
-  // per questi primi non serve sumw2?
 
   TH1F *all_inv_mass = new TH1F("all_inv_mass", "all_inv_mass", 1000, 0, 6);
 
@@ -66,10 +63,10 @@ int main() {
     }
     star_num2 = 0;
 
-      for (int event{0}; event < 1e2; event++) { // da cambiare
+    for (int event{0}; event < 1e2; event++) { 
       bool is_star{false};
       double val = gRandom->Rndm();
-      double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth
+      double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth angle
       double theta = gRandom->Uniform(0., M_PI);   // polar angle
       double p_m = gRandom->Exp(1.);
       double px = p_m * std::cos(phi) * std::sin(theta);
@@ -135,22 +132,22 @@ int main() {
         if (all_good != 0) {
           std::cout << "something went wrong during decay" << '\n' << "\n";
         } else {
-           dec_inv_mass->Fill(p1.GetInvariantMass(p2));
+          dec_inv_mass->Fill(p1.GetInvariantMass(p2));
         }
       }
       if (!is_star) {
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
-        EventParticles[event + star_num2/2] = p;
+        EventParticles[event + star_num2 / 2] = p;
       } else {
-        EventParticles[event + star_num2/2] = p1;
-        EventParticles[event - 1 + star_num2/2] = p2;
+        EventParticles[event + star_num2 / 2] = p1;
+        EventParticles[event - 1 + star_num2 / 2] = p2;
       }
 
-      for (int compare{0}; compare < event + star_num2/2; compare++) {
+      for (int compare{0}; compare < event + star_num2 / 2; compare++) {
         Particle old_particle{EventParticles[compare]};
         if (is_star) {
-        p = p1;
+          p = p1;
         }
         all_inv_mass->Fill(p.GetInvariantMass(old_particle));
         if (p.GetCharge() == old_particle.GetCharge()) { // same charge
@@ -163,8 +160,7 @@ int main() {
             pi_k_same->Fill(p.GetInvariantMass(old_particle));
           }
         } else { // different charge
-          opposite_charge_inv_mass->Fill(
-              p.GetInvariantMass(old_particle));
+          opposite_charge_inv_mass->Fill(p.GetInvariantMass(old_particle));
           bool first_cond{p.GetName() == "pion +" &&
                           old_particle.GetName() == "kaon -"};
           bool second_cond{p.GetName() == "pion -" &&
@@ -175,74 +171,19 @@ int main() {
         }
       }
     }
-} 
-
-azimuth->Write();
-polar_angle->Write();
-p_module->Write();
-p_trans->Write();
-gen_particles->Write();
-energy->Write();
-all_inv_mass->Write();
-same_charge_inv_mass->Write();
-opposite_charge_inv_mass->Write();
-pi_k_same->Write();
-pi_k_opposite->Write();
-dec_inv_mass->Write();
-//tolto qui un dec_inv_mass->draw(), errato credo
-
-/*  TCanvas *c[14];
-  for (int i{}; i < 14; i++) {
-    c[i] = new TCanvas("c" + i, "histo", 200, 10, 600, 400);
   }
-  c[0]->cd(0);
-  gen_particles->Draw("HEP");
-  c[0]->Print("gen_particles.pdf");
-  c[0]->Print("gen_particles.C");
-  c[0]->Print("gen_particles.root");
-  c[1]->cd(0);
-  all_inv_mass->Draw("HEP");
-  c[6]->Print("invariant_mass_all.pdf");
-  c[6]->Print("invariant_mass_all.C");
-  c[6]->Print("invariant_mass_all.root");
-  c[7]->cd(0);
-  same_charge_inv_mass->Draw("HEP");
-  c[7]->Print("invariant_mass_same_charge.pdf");
-  c[7]->Print("invariant_mass_same_charge.C");
-  c[7]->Print("invariant_mass_same_charge.root");
-  c[8]->cd(0);
-  opposite_charge_inv_mass->Draw("HEP");
-  c[8]->Print("invariant_mass_opposite_charge.pdf");
-  c[8]->Print("invariant_mass_opposite_charge.C");
-  c[8]->Print("invariant_mass_opposite_charge.root");
-  c[9]->cd(0);
-  pi_k_same->Draw("HEP");
-  c[9]->Print("invariant_mass_pi_k_same_charge.pdf");
-  c[9]->Print("invariant_mass_pi_k_same_charge.C");
-  c[9]->Print("invariant_mass_pi_k_same_charge.root");
-  c[10]->cd(0);
-  pi_k_opposite->Draw("HEP");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.pdf");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.C");
-  c[10]->Print("invariant_mass_pi_k_opposite_charge.root");
-  c[11]->cd(0);
-  dec_inv_mass->Draw("HEP");
-  c[11]->Print("invariant_mass_decay_product.pdf");
-  c[11]->Print("invariant_mass_decay_product.C");
-  c[11]->Print("invariant_mass_decay_product.root");
-  c[12]->cd(0);
-*/
 
-// credo fosse non richiesta la parte di draw o di salvare su vari file
-// mi rendo conto che la ragione di questa aggiunta era probabilmente
-// la non disponabilità al tempo di analyse
-
-
-/*
-  for (auto &elem : Particle::particleTypes_) {
-    elem.second->delete();
-  }
-  */
- file->Close();
-
+  azimuth->Write();
+  polar_angle->Write();
+  p_module->Write();
+  p_trans->Write();
+  gen_particles->Write();
+  energy->Write();
+  all_inv_mass->Write();
+  same_charge_inv_mass->Write();
+  opposite_charge_inv_mass->Write();
+  pi_k_same->Write();
+  pi_k_opposite->Write();
+  dec_inv_mass->Write();
+  file->Close();
 }

@@ -1,4 +1,9 @@
+#include "TFile.h"
+#include "TH1.h"
+#include "TF1.h"
+#include <TCanvas.h>
 #include <iostream>
+
 
 void analyse()
 {
@@ -229,25 +234,6 @@ void analyse()
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
 
-  /*
-  11)Considerando gli istogrammi di massa invariante:
-  1) tutte le particelle, combinazioni con carica di segno opposto
-  2) tutte le particelle, combinazioni con carica di segno concorde
-  3) quello in cui si combinano solo pioni e kaoni di segno opposto,
-  4) quello in cui si combinano solo pioni e kaoni di segno concorde.
-  5) quello contenente solo i decadimenti della K*
-  si sottragga dall’ 1) il 2) e dal 3) il 4). Negli istogrammi esito della
-  sottrazione, si osserva un picco in corrispondenza della massa della risonanza
-  K*? È consistente con il segnale dell’istogramma 5)? n.b., per una corretta
-  valutazione delle incertezze sui contenuti dei bin negli istogrammi esito di
-  tali differenze, è necessario che per gli istogrammi “operandi” sia stato
-  invocato il metodo Sumw2() in fase di creazione nel programma di generazione.
-  Infine, dagli istogrammi esito della sottrazione estrarre la massa e la
-  larghezza della K* adattando la distribuzione ottenuta dalla differenza a una
-  distribuzione gaussiana (media della gaussiana = massa K*, sigma gaussiana =
-  larghezza K*, definite esplicitamente un TF1 e stampate a schermo sullo
-  standard output il valore dei parametri, il X2 /NDF e la probabilità del fit)
-  */
   TH1F *diff = new TH1F(*opposite_charge_inv_mass);
   diff->Add(same_charge_inv_mass, -1.);
   TH1F *diff_p_k = new TH1F(*pi_k_opposite);
@@ -275,16 +261,6 @@ void analyse()
       << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
-
-  /*
-  12)Considerando gli istogrammi di massa invariante:
-  • Apportate le necessarie modifiche per una buona presentazione dei grafici
-  che avete prodotto (range della scala verticale, etichette degli assi,
-  eventuale “cosmetica”) • Disegnate gli istogrammi su delle Canvas che poi
-  salverete in formato .pdf (o altro formato grafico), .C,.root
-  */
-
-  // impostando lavoro per 5 canvas
 
   TCanvas *c1 = new TCanvas("c1", "n gen, p module and angles", 200, 10, 600, 400);
   c1->Divide(2, 2);
@@ -342,6 +318,4 @@ void analyse()
   c5->Print("Decay_Diffs.C");
   c5->Print("Decay_Diffs.root");
 
-  //
 }
-// PROBABILMENTE NOME SBAGLIATO HISTO FITTATI
