@@ -104,20 +104,20 @@ void analyse()
   if (pi_k_same->GetEntries() < 1e5 * 30 * 119 &&
       pi_k_same->GetEntries() > 1e5 * 20 * 79)
   {
-    std::cout << "entries in pi k same histo: ok" << '\n';
+    std::cout << "entries in pi k same histo: ok" <<  '\n';
   }
   else
   {
-    std::cout << "entries in pi k same histo: unexpected value" << '\n';
+    std::cout << "entries in pi k same histo: unexpected value" << pi_k_same->GetEntries() << '\n';
   }
   if (pi_k_opposite->GetEntries() < 1e5 * 30 * 119 &&
       pi_k_opposite->GetEntries() > 1e5 * 20 * 79)
   {
-    std::cout << "entries in pi k opposite histo: ok" << '\n';
+    std::cout << "entries in pi k opposite histo: ok"  <<'\n';
   }
   else
   {
-    std::cout << "entries in pi k opposite histo: unexpected value" << '\n';
+    std::cout << "entries in pi k opposite histo: unexpected value" << pi_k_opposite->GetEntries() << '\n';
   }
   if (dec_inv_mass->GetEntries() < 1e6 && dec_inv_mass->GetEntries() > 1e4)
   {

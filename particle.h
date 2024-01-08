@@ -1,7 +1,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "unordered_map"
+#include <unordered_map>
 #include <iostream>
 #include <string>
 
@@ -11,10 +11,10 @@
 
 class Particle {
 public:
-  Particle();
+  Particle() = default;
   Particle(std::string name, double px, double py, double pz);
 
-   std::string GetName() const;
+   std::string GetName() const; //const members
    double GetPx() const;
    double GetPy() const;
    double GetPz() const;
@@ -22,15 +22,17 @@ public:
    int GetCharge() const;
    double GetEnergy() const;
    double GetInvariantMass(Particle& other_particle) const;
+   int Decay2Body(Particle &dau1,Particle &dau2) const;
+   void Print() const;
 
-  void SetName(std::string new_name);
-  void SetP(double px,double py,double pz);
-  void Print() const;
+   void SetName(std::string new_name);
+   void SetP(double px,double py,double pz);
 
-  static void AddParticleType(std::string name, double mass, int charge,
+  //static member
+   static void AddParticleType(std::string name, double mass, int charge,
                               double width = 0);
-  static void PrintAllTypes();
-  int Decay2Body(Particle &dau1,Particle &dau2) const;
+   static void PrintAllTypes();
+  
 
 private:
   static const int maxNumParticleType_;
@@ -43,8 +45,7 @@ private:
 
    int FindParticle(std::string name) const;
    double GetModuleP() const;
-
-  void Boost(double bx, double by, double bz);
+   void Boost(double bx, double by, double bz);
 };
 
 #endif
