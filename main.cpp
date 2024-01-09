@@ -9,7 +9,8 @@
 #include "particletype.h"
 #include "resonancetype.h"
 
-int main() {
+int main()
+{
   TH1::AddDirectory(kFALSE);
   TFile *file = new TFile("histo.root", "RECREATE");
   gRandom->SetSeed(200769);
@@ -52,28 +53,31 @@ int main() {
   TH1F *pi_k_opposite = new TH1F("pi_k_opposite_charge_inv_mass",
                                  "pi_k_opposite_charge_inv_mass", 1000, 0, 6);
   pi_k_opposite->Sumw2();
-  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 1000, 0, 6);
+  TH1F *dec_inv_mass = new TH1F("dec_inv_mass", "dec_inv_mass", 1000, 0, 4.5);
   dec_inv_mass->Sumw2();
 
   int star_num{0};
 
-  for (int i{0}; i < 1e5; i++) {
-    if (star_num > 20) {
-      std::cout << "too much k* has been genarate" << '\n';
+  for (int i{0}; i < 1e5; i++)
+  {
+    if (star_num > 20)
+    {
+      std::cout << "too much k* has been generated" << '\n';
     }
     star_num = 0; // k* counter
 
-    for (int event{0}; event < 1e2; event++) { 
-      bool is_star{false}; //tells if a k* is found
-      double type = gRandom->Rndm(); // type selector
+    for (int event{0}; event < 1e2; event++)
+    {
+      bool is_star{false};                         // tells if a k* is found
+      double type = gRandom->Rndm();               // type selector
       double phi = gRandom->Uniform(0., 2 * M_PI); // azimuth angle
       double theta = gRandom->Uniform(0., M_PI);   // polar angle
-      double p_m = gRandom->Exp(1.); // P module
+      double p_m = gRandom->Exp(1.);               // P module
       double px = p_m * std::cos(phi) * std::sin(theta);
       double py = p_m * std::sin(phi) * std::sin(theta);
       double pz = p_m * std::cos(theta);
 
-      azimuth->Fill(phi); //filling histo
+      azimuth->Fill(phi); // filling histo
       polar_angle->Fill(theta);
       p_module->Fill(p_m);
       p_trans->Fill(std::sqrt(std::pow(px, 2) + std::pow(py, 2)));
@@ -82,37 +86,44 @@ int main() {
       Particle p1;
       Particle p2;
 
-      if (type <= 0.4) {
+      if (type <= 0.4)
+      {
         p.SetName("pion +");
         gen_particles->Fill(0.5);
       }
 
-      else if (type <= 0.8) {
+      else if (type <= 0.8)
+      {
         p.SetName("pion -");
         gen_particles->Fill(1.5);
       }
 
-      else if (type <= 0.85) {
+      else if (type <= 0.85)
+      {
         p.SetName("kaon +");
         gen_particles->Fill(2.5);
       }
 
-      else if (type <= 0.90) {
+      else if (type <= 0.90)
+      {
         p.SetName("kaon -");
         gen_particles->Fill(3.5);
       }
 
-      else if (type <= 0.945) {
+      else if (type <= 0.945)
+      {
         p.SetName("proton +");
         gen_particles->Fill(4.5);
       }
 
-      else if (type <= 0.99) {
+      else if (type <= 0.99)
+      {
         p.SetName("proton -");
         gen_particles->Fill(5.5);
       }
 
-      else {
+      else
+      {
         p.SetName("resonance");
         gen_particles->Fill(6.5);
         is_star = true;
@@ -120,58 +131,118 @@ int main() {
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
         star_num += 1;
-        if (decad <= 0.5) {
+        if (decad <= 0.5)
+        {
           p1.SetName("pion +");
           p2.SetName("kaon -");
-
-        } else {
+        }
+        else
+        {
           p1.SetName("pion -");
           p2.SetName("kaon +");
         }
         int all_good{p.Decay2Body(p1, p2)};
-        if (all_good != 0) {
-          std::cout << "something went wrong during decay" << '\n' << "\n";
-        } else {
+        if (all_good != 0)
+        {
+          std::cout << "something went wrong during decay" << '\n'
+                    << "\n";
+        }
+        else
+        {
           dec_inv_mass->Fill(p1.GetInvariantMass(p2));
         }
       }
-      if (!is_star) {
+      if (!is_star)
+      {
         p.SetP(px, py, pz);
         energy->Fill(p.GetEnergy());
         EventParticles[event + star_num] = p;
-      } else {
+      }
+      else
+      {
         EventParticles[event + star_num] = p1;
         EventParticles[event - 1 + star_num] = p2;
       }
 
-      for (int compare{0}; compare < event + star_num; compare++) {
+      for (int compare{0}; compare < event + star_num; compare++)
+      {
         Particle old_particle{EventParticles[compare]};
-        if (is_star) {
+        if (is_star)
+        {
           p = p1;
         }
         all_inv_mass->Fill(p.GetInvariantMass(old_particle));
-        if (p.GetCharge() == old_particle.GetCharge()) { // same charge
+        if (p.GetCharge() == old_particle.GetCharge())
+        { // same charge
           same_charge_inv_mass->Fill(p.GetInvariantMass(old_particle));
           const bool first_cond{p.GetName() == "pion +" &&
-                          old_particle.GetName() == "kaon +"};
+                                old_particle.GetName() == "kaon +"};
           const bool second_cond{p.GetName() == "pion -" &&
-                           old_particle.GetName() == "kaon -"};
-          if (first_cond || second_cond) {
+                                 old_particle.GetName() == "kaon -"};
+          if (first_cond || second_cond)
+          {
             pi_k_same->Fill(p.GetInvariantMass(old_particle));
           }
-        } else { // different charge
+        }
+        else
+        { // different charge
           opposite_charge_inv_mass->Fill(p.GetInvariantMass(old_particle));
           const bool first_cond{p.GetName() == "pion +" &&
-                          old_particle.GetName() == "kaon -"};
+                                old_particle.GetName() == "kaon -"};
           const bool second_cond{p.GetName() == "pion -" &&
-                           old_particle.GetName() == "kaon +"};
-          if (first_cond || second_cond) {
+                                 old_particle.GetName() == "kaon +"};
+          if (first_cond || second_cond)
+          {
             pi_k_opposite->Fill(p.GetInvariantMass(old_particle));
           }
         }
       }
     }
   }
+
+  gen_particles->GetXaxis()->SetBinLabel(1, "pi+");
+  gen_particles->GetXaxis()->SetBinLabel(2, "pi-");
+  gen_particles->GetXaxis()->SetBinLabel(3, "k+");
+  gen_particles->GetXaxis()->SetBinLabel(4, "k-");
+  gen_particles->GetXaxis()->SetBinLabel(5, "p+");
+  gen_particles->GetXaxis()->SetBinLabel(6, "p-");
+  gen_particles->GetXaxis()->SetBinLabel(7, "k*");
+
+  azimuth->GetXaxis()->SetTitle("angle (rad)");
+  azimuth->GetXaxis()->SetTitleSize(0.045);
+
+  polar_angle->GetXaxis()->SetTitle("angle (rad)");
+  polar_angle->GetXaxis()->SetTitleSize(0.045);
+
+  gen_particles->GetXaxis()->SetTitle("pi+-, k+-, p+-, k*");
+  gen_particles->GetXaxis()->SetTitleSize(0.045);
+
+  dec_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
+  dec_inv_mass->GetXaxis()->SetTitleSize(0.045);
+
+  pi_k_opposite->GetXaxis()->SetTitle("invariant mass (GeV)");
+  pi_k_opposite->GetXaxis()->SetTitleSize(0.045);
+
+  pi_k_same->GetXaxis()->SetTitle("invariant mass (GeV)");
+  pi_k_same->GetXaxis()->SetTitleSize(0.045);
+
+  opposite_charge_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
+  opposite_charge_inv_mass->GetXaxis()->SetTitleSize(0.045);
+
+  same_charge_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
+  same_charge_inv_mass->GetXaxis()->SetTitleSize(0.045);
+
+  all_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
+  all_inv_mass->GetXaxis()->SetTitleSize(0.045);
+
+  energy->GetXaxis()->SetTitle("energy (GeV)");
+  energy->GetXaxis()->SetTitleSize(0.045);
+
+  p_trans->GetXaxis()->SetTitle("linear momentum (GeV)");
+  p_trans->GetXaxis()->SetTitleSize(0.045);
+
+  p_module->GetXaxis()->SetTitle("linear momentum (GeV)");
+  p_module->GetXaxis()->SetTitleSize(0.045);
 
   azimuth->Write();
   polar_angle->Write();

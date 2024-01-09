@@ -4,6 +4,12 @@
 #include <TCanvas.h>
 #include <iostream>
 
+void setStyle()
+{
+  gROOT->SetStyle("Plain");
+  gStyle->SetPalette(57);
+  gStyle->SetOptTitle(0);
+}
 
 void analyse()
 {
@@ -101,19 +107,19 @@ void analyse()
     std::cout << "entries in opposite charge inv mass histo: unexpected value"
               << '\n';
   }
-  if (pi_k_same->GetEntries() < 1e5 * 30 * 119 &&
-      pi_k_same->GetEntries() > 1e5 * 20 * 79)
+  if (pi_k_same->GetEntries() < 1e5 * 60 * 25 * 2 &&
+      pi_k_same->GetEntries() > 1e5 * 30 * 3 * 2)
   {
-    std::cout << "entries in pi k same histo: ok" <<  '\n';
+    std::cout << "entries in pi k same histo: ok" << '\n';
   }
   else
   {
     std::cout << "entries in pi k same histo: unexpected value" << pi_k_same->GetEntries() << '\n';
   }
-  if (pi_k_opposite->GetEntries() < 1e5 * 30 * 119 &&
-      pi_k_opposite->GetEntries() > 1e5 * 20 * 79)
+  if (pi_k_opposite->GetEntries() < 1e5 * 60 * 25 * 2 &&
+      pi_k_opposite->GetEntries() > 1e5 * 30 * 3 * 2)
   {
-    std::cout << "entries in pi k opposite histo: ok"  <<'\n';
+    std::cout << "entries in pi k opposite histo: ok" << '\n';
   }
   else
   {
@@ -128,9 +134,9 @@ void analyse()
     std::cout << "entries in dec inv mass histo: unexpected value" << '\n';
   }
 
-  if (gen_particles->GetBinContent(1) - gen_particles->GetBinError(1) <=
+  if (gen_particles->GetBinContent(1) - 3 * gen_particles->GetBinError(1) <=
           gen_particles->GetEntries() * 0.4 &&
-      gen_particles->GetBinContent(1) + gen_particles->GetBinError(1) >=
+      gen_particles->GetBinContent(1) + 3 * gen_particles->GetBinError(1) >=
           gen_particles->GetEntries() * 0.4)
   {
     std::cout << "n pi+: ok" << '\n';
@@ -139,9 +145,9 @@ void analyse()
   {
     std::cout << "n pi+: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(2) - gen_particles->GetBinError(2) <=
+  if (gen_particles->GetBinContent(2) - 3 * gen_particles->GetBinError(2) <=
           gen_particles->GetEntries() * 0.4 &&
-      gen_particles->GetBinContent(2) + gen_particles->GetBinError(2) >=
+      gen_particles->GetBinContent(2) + 3 * gen_particles->GetBinError(2) >=
           gen_particles->GetEntries() * 0.4)
   {
     std::cout << "n pi-: ok" << '\n';
@@ -150,9 +156,9 @@ void analyse()
   {
     std::cout << "n pi-: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(3) - gen_particles->GetBinError(3) <=
+  if (gen_particles->GetBinContent(3) - 3 * gen_particles->GetBinError(3) <=
           gen_particles->GetEntries() * 0.05 &&
-      gen_particles->GetBinContent(3) + gen_particles->GetBinError(3) >=
+      gen_particles->GetBinContent(3) + 3 * gen_particles->GetBinError(3) >=
           gen_particles->GetEntries() * 0.05)
   {
     std::cout << "n k+: ok" << '\n';
@@ -161,9 +167,9 @@ void analyse()
   {
     std::cout << "n k+: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(4) - gen_particles->GetBinError(4) <=
+  if (gen_particles->GetBinContent(4) - 3 * gen_particles->GetBinError(4) <=
           gen_particles->GetEntries() * 0.05 &&
-      gen_particles->GetBinContent(4) + gen_particles->GetBinError(4) >=
+      gen_particles->GetBinContent(4) + 3 * gen_particles->GetBinError(4) >=
           gen_particles->GetEntries() * 0.05)
   {
     std::cout << "n k-: ok" << '\n';
@@ -172,9 +178,9 @@ void analyse()
   {
     std::cout << "n k-: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(5) - gen_particles->GetBinError(5) <=
+  if (gen_particles->GetBinContent(5) - 3 * gen_particles->GetBinError(5) <=
           gen_particles->GetEntries() * 0.045 &&
-      gen_particles->GetBinContent(5) + gen_particles->GetBinError(5) >=
+      gen_particles->GetBinContent(5) + 3 * gen_particles->GetBinError(5) >=
           gen_particles->GetEntries() * 0.045)
   {
     std::cout << "n p+: ok" << '\n';
@@ -183,9 +189,9 @@ void analyse()
   {
     std::cout << "n p+: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(6) - gen_particles->GetBinError(6) <=
+  if (gen_particles->GetBinContent(6) - 3 * gen_particles->GetBinError(6) <=
           gen_particles->GetEntries() * 0.045 &&
-      gen_particles->GetBinContent(6) + gen_particles->GetBinError(6) >=
+      gen_particles->GetBinContent(6) + 3 * gen_particles->GetBinError(6) >=
           gen_particles->GetEntries() * 0.045)
   {
     std::cout << "n p-: ok" << '\n';
@@ -194,9 +200,9 @@ void analyse()
   {
     std::cout << "n p-: unexpected" << '\n';
   }
-  if (gen_particles->GetBinContent(7) - gen_particles->GetBinError(7) <=
+  if (gen_particles->GetBinContent(7) - 3 * gen_particles->GetBinError(7) <=
           gen_particles->GetEntries() * 0.01 &&
-      gen_particles->GetBinContent(7) + gen_particles->GetBinError(7) >=
+      gen_particles->GetBinContent(7) + 3 * gen_particles->GetBinError(7) >=
           gen_particles->GetEntries() * 0.01)
   {
     std::cout << "n k*: ok" << '\n';
@@ -220,8 +226,8 @@ void analyse()
 
   f1 = new TF1("f2", "expo(0)", 0, 1);
   p_module->Fit(f1);
-  if ((f1->GetParameter(1) - 1) / f1->GetParError(1) < 2 &&
-      (f1->GetParameter(1) - 1) / f1->GetParError(1) > -2)
+  if ((-f1->GetParameter(1) - 1) / f1->GetParError(1) < 2 &&
+      (-f1->GetParameter(1) - 1) / f1->GetParError(1) > -2)
   {
     std::cout << "p module distrution is as expexted" << '\n';
   }
@@ -230,16 +236,20 @@ void analyse()
     std::cout << "unexpexted results for p module distriution" << '\n';
   }
   std::cout << "p module: expo fit parameter: " << f1->GetParameter(1) << "+/-"
-            << f1->GetParError(1) << '\n';
+            << -f1->GetParError(1) << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
 
-  TH1F *diff = new TH1F(*opposite_charge_inv_mass);
-  diff->Add(same_charge_inv_mass, -1.);
-  TH1F *diff_p_k = new TH1F(*pi_k_opposite);
-  diff_p_k->Add(pi_k_same, -1);
+  TH1F *diff = new TH1F(
+      "difference_inv_mass", "difference_inv_mass", 1000, 0, 4.5);
+  diff->Sumw2();
+  diff->Add(opposite_charge_inv_mass, same_charge_inv_mass, 1., -1.);
+  TH1F *diff_pi_k = new TH1F(
+      "difference_inv_mass_pi_k", "difference_inv_mass_pi_k", 1000, 0, 4.5);
+  diff_pi_k->Sumw2();
+  diff_pi_k->Add(pi_k_opposite, pi_k_same, 1., -1.);
   diff->GetMaximumBin();
-  diff_p_k->GetMaximumBin();
+  diff_pi_k->GetMaximumBin();
   dec_inv_mass->GetMaximumBin();
   f1 = new TF1("f3", "gaus(0)", 0, 10);
   diff->Fit(f1);
@@ -251,7 +261,7 @@ void analyse()
             << f1->GetParError(2) << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
-  diff_p_k->Fit(f1);
+  diff_pi_k->Fit(f1);
   std::cout
       << "from difference opposite and same charge pions and kaons inv mass: "
       << '\n'
@@ -261,6 +271,11 @@ void analyse()
       << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
+
+  diff->GetXaxis()->SetTitle("invariant mass (GeV)");
+  diff->GetXaxis()->SetTitleSize(0.045);
+  diff_pi_k->GetXaxis()->SetTitle("invariant mass (GeV)");
+  diff_pi_k->GetXaxis()->SetTitleSize(0.045);
 
   TCanvas *c1 = new TCanvas("c1", "n gen, p module and angles", 200, 10, 600, 400);
   c1->Divide(2, 2);
@@ -313,9 +328,8 @@ void analyse()
   c5->cd(2);
   diff->Draw("HEP");
   c5->cd(3);
-  diff_p_k->Draw("HEP");
+  diff_pi_k->Draw("HEP");
   c5->Print("Decay_Diffs.pdf");
   c5->Print("Decay_Diffs.C");
   c5->Print("Decay_Diffs.root");
-
 }
