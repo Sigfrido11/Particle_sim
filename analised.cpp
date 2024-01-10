@@ -212,6 +212,8 @@ void analyse()
     std::cout << "n k*: unexpected" << '\n';
   }
 
+  gStyle->SetOptFit(1111)
+
   TF1 *f1 = new TF1("f1", "[0]", 0, 10);
   azimuth->Fit(f1);
   std::cout << "azimuth: uniform fit parameter: " << f1->GetParameter(0)
@@ -298,8 +300,12 @@ void analyse()
 
   diff->GetXaxis()->SetTitle("invariant mass (GeV)");
   diff->GetXaxis()->SetTitleSize(0.045);
+  diff->GetYaxis()->SetTitle("events");
+  diff->GetYaxis()->SetTitleSize(0.045);
   diff_pi_k->GetXaxis()->SetTitle("invariant mass (GeV)");
   diff_pi_k->GetXaxis()->SetTitleSize(0.045);
+  diff_pi_k->GetYaxis()->SetTitle("events");
+  diff_pi_k->GetYaxis()->SetTitleSize(0.045);
 
   TCanvas *c1 = new TCanvas("c1", "n gen, p module and angles", 200, 10, 600, 400);
   c1->Divide(2, 2);

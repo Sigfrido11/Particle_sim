@@ -210,39 +210,65 @@ int main()
 
   azimuth->GetXaxis()->SetTitle("angle (rad)");
   azimuth->GetXaxis()->SetTitleSize(0.045);
+  azimuth->GetYaxis()->SetTitle("events");
+  azimuth->GetYaxis()->SetTitleSize(0.045);
+  azimuth->GetYaxis()->SetRange(0.,12000.)
 
   polar_angle->GetXaxis()->SetTitle("angle (rad)");
   polar_angle->GetXaxis()->SetTitleSize(0.045);
+  polar_angle->GetYaxis()->SetTitle("events");
+  polar_angle->GetYaxis()->SetTitleSize(0.045);
+  polar_angle->GetYaxis()->SetRange(0.,12000.)
 
   gen_particles->GetXaxis()->SetTitle("particles");
   gen_particles->GetXaxis()->SetTitleSize(0.045);
+  gen_particles->GetYaxis()->SetTitle("events");
+  gen_particles->GetYaxis()->SetTitleSize(0.045);
 
   dec_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
   dec_inv_mass->GetXaxis()->SetTitleSize(0.045);
+  dec_inv_mass->GetYaxis()->SetTitle("events");
+  dec_inv_mass->GetYaxis()->SetTitleSize(0.045);
 
   pi_k_opposite->GetXaxis()->SetTitle("invariant mass (GeV)");
   pi_k_opposite->GetXaxis()->SetTitleSize(0.045);
+  pi_k_opposite->GetYaxis()->SetTitle("events");
+  pi_k_opposite->GetYaxis()->SetTitleSize(0.045);
 
   pi_k_same->GetXaxis()->SetTitle("invariant mass (GeV)");
   pi_k_same->GetXaxis()->SetTitleSize(0.045);
+  pi_k_same->GetYaxis()->SetTitle("events");
+  pi_k_same->GetYaxis()->SetTitleSize(0.045);
 
   opposite_charge_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
   opposite_charge_inv_mass->GetXaxis()->SetTitleSize(0.045);
+  opposite_charge_inv_mass->GetYaxis()->SetTitle("events");
+  opposite_charge_inv_mass->GetYaxis()->SetTitleSize(0.045);
 
   same_charge_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
   same_charge_inv_mass->GetXaxis()->SetTitleSize(0.045);
+  same_charge_inv_mass->GetYaxis()->SetTitle("events");
+  same_charge_inv_mass->GetYaxis()->SetTitleSize(0.045);
 
   all_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
   all_inv_mass->GetXaxis()->SetTitleSize(0.045);
+  all_inv_mass->GetYaxis()->SetTitle("events");
+  all_inv_mass->GetYaxis()->SetTitleSize(0.045);
 
   energy->GetXaxis()->SetTitle("energy (GeV)");
   energy->GetXaxis()->SetTitleSize(0.045);
+  energy->GetYaxis()->SetTitle("events");
+  energy->GetYaxis()->SetTitleSize(0.045);
 
   p_trans->GetXaxis()->SetTitle("linear momentum (GeV)");
   p_trans->GetXaxis()->SetTitleSize(0.045);
+  p_trans->GetYaxis()->SetTitle("events");
+  p_trans->GetYaxis()->SetTitleSize(0.045);
 
   p_module->GetXaxis()->SetTitle("linear momentum (GeV)");
-  p_module->GetXaxis()->SetTitleSize(0.045);
+  p_module->GetXaxis()->SetTitleSize(0.045); 
+  p_module->GetYaxis()->SetTitle("events");
+  p_module->GetYaxis()->SetTitleSize(0.045);
 
   azimuth->Write();
   polar_angle->Write();
