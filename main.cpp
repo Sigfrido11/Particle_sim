@@ -212,13 +212,13 @@ int main()
   azimuth->GetXaxis()->SetTitleSize(0.045);
   azimuth->GetYaxis()->SetTitle("events");
   azimuth->GetYaxis()->SetTitleSize(0.045);
-  azimuth->GetYaxis()->SetRangeUser(0.,12000.)
+  azimuth->GetYaxis()->SetRangeUser(0.,12000.);
 
   polar_angle->GetXaxis()->SetTitle("angle (rad)");
   polar_angle->GetXaxis()->SetTitleSize(0.045);
   polar_angle->GetYaxis()->SetTitle("events");
   polar_angle->GetYaxis()->SetTitleSize(0.045);
-  polar_angle->GetYaxis()->SetRangeUser(0.,12000.)
+  polar_angle->GetYaxis()->SetRangeUser(0.,12000.);
 
   gen_particles->GetXaxis()->SetTitle("particles");
   gen_particles->GetXaxis()->SetTitleSize(0.045);
