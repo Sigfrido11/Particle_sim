@@ -212,7 +212,7 @@ void analyse()
     std::cout << "n k*: unexpected" << '\n';
   }
 
-  gStyle->SetOptFit(1111)
+  gStyle->SetOptFit(1111);
 
   TF1 *f1 = new TF1("f1", "[0]", 0, 10);
   azimuth->Fit(f1);
