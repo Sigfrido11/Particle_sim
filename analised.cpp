@@ -87,24 +87,24 @@ void analyse()
   {
     std::cout << "entries in gen particles histo: unexpected value" << '\n';
   }
-  if (same_charge_inv_mass->GetEntries() < 1e5 * 40 * 119 &&
-      same_charge_inv_mass->GetEntries() > 1e5 * 30 * 79)
+  if (same_charge_inv_mass->GetEntries() < 1e5 * 70 * 71 &&
+      same_charge_inv_mass->GetEntries() > 1e5 * 45 * 44)
   {
     std::cout << "entries in same charge inv mass histo: ok" << '\n';
   }
   else
   {
-    std::cout << "entries in same charge inv mass histo: unexpected value"
+    std::cout << "entries in same charge inv mass histo: unexpected value" << same_charge_inv_mass->GetEntries()
               << '\n';
   }
-  if (opposite_charge_inv_mass->GetEntries() < 1e5 * 40 * 119 &&
-      opposite_charge_inv_mass->GetEntries() > 1e5 * 30 * 79)
+  if (opposite_charge_inv_mass->GetEntries() < 1e5 * 70 * 50 &&
+      opposite_charge_inv_mass->GetEntries() > 1e5 * 45 * 45)
   {
     std::cout << "entries in opposite charge inv mass histo: ok" << '\n';
   }
   else
   {
-    std::cout << "entries in opposite charge inv mass histo: unexpected value"
+    std::cout << "entries in opposite charge inv mass histo: unexpected value" << opposite_charge_inv_mass->GetEntries()
               << '\n';
   }
   if (pi_k_same->GetEntries() < 1e5 * 60 * 25 * 2 &&
@@ -114,7 +114,7 @@ void analyse()
   }
   else
   {
-    std::cout << "entries in pi k same histo: unexpected value" << pi_k_same->GetEntries() << '\n';
+    std::cout << "entries in pi k same histo: unexpected value" << '\n';
   }
   if (pi_k_opposite->GetEntries() < 1e5 * 60 * 25 * 2 &&
       pi_k_opposite->GetEntries() > 1e5 * 30 * 3 * 2)
@@ -123,7 +123,7 @@ void analyse()
   }
   else
   {
-    std::cout << "entries in pi k opposite histo: unexpected value" << pi_k_opposite->GetEntries() << '\n';
+    std::cout << "entries in pi k opposite histo: unexpected value" << '\n';
   }
   if (dec_inv_mass->GetEntries() < 1e6 && dec_inv_mass->GetEntries() > 1e4)
   {
@@ -241,34 +241,58 @@ void analyse()
   std::cout << "probability: " << f1->GetProb() << '\n';
 
   TH1F *diff = new TH1F(
-      "difference_inv_mass", "difference_inv_mass", 1000, 0, 4.5);
+      "difference_inv_mass", "difference_inv_mass", 1000, 0, 6.);
   diff->Sumw2();
   diff->Add(opposite_charge_inv_mass, same_charge_inv_mass, 1., -1.);
   TH1F *diff_pi_k = new TH1F(
-      "difference_inv_mass_pi_k", "difference_inv_mass_pi_k", 1000, 0, 4.5);
+      "difference_inv_mass_pi_k", "difference_inv_mass_pi_k", 1000, 0, 6.);
   diff_pi_k->Sumw2();
   diff_pi_k->Add(pi_k_opposite, pi_k_same, 1., -1.);
-  diff->GetMaximumBin();
-  diff_pi_k->GetMaximumBin();
-  dec_inv_mass->GetMaximumBin();
+
+  std::cout << "maximum: "
+            << '\n'
+            << "from diff opposite same all: "
+            << diff->GetBinCenter(diff->GetMaximumBin())
+            << '\n'
+            << "from diff opposite same pi-k: "
+            << diff_pi_k->GetBinCenter(diff_pi_k->GetMaximumBin())
+            << '\n'
+            << "from decay product: "
+            << dec_inv_mass->GetBinCenter(dec_inv_mass->GetMaximumBin())
+            << '\n';
+
   f1 = new TF1("f3", "gaus(0)", 0, 10);
-  diff->Fit(f1);
-  std::cout << "from difference opposite and same charge inv mass: " << '\n'
+  dec_inv_mass->Fit(f1);
+  std::cout << "from decay products: "
+            << '\n'
             << "k* mass: " << f1->GetParameter(1) << "+/-" << f1->GetParError(1)
             << '\n'
-            << f1->GetParameter(1) << "+/-" << f1->GetParError(1) << '\n'
-            << "k* width: " << f1->GetParameter(2) << "+/-"
-            << f1->GetParError(2) << '\n';
+            << "k* width: " << f1->GetParameter(2) << "+/-" << f1->GetParError(2)
+            << '\n'
+            << "gauss width: " << f1->GetParameter(0) << "+/-" << f1->GetParError(0)
+            << '\n';
+  std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
+  std::cout << "probability: " << f1->GetProb() << '\n';
+  diff->Fit(f1);
+  std::cout << "from difference opposite and same charge inv mass: "
+            << '\n'
+            << "k* mass: " << f1->GetParameter(1) << "+/-" << f1->GetParError(1)
+            << '\n'
+            << "k* width: " << f1->GetParameter(2) << "+/-" << f1->GetParError(2)
+            << '\n'
+            << "gauss width: " << f1->GetParameter(0) << "+/-" << f1->GetParError(0)
+            << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
   diff_pi_k->Fit(f1);
-  std::cout
-      << "from difference opposite and same charge pions and kaons inv mass: "
-      << '\n'
-      << "k* mass: " << f1->GetParameter(1) << "+/-" << f1->GetParError(1)
-      << '\n'
-      << "k* width: " << f1->GetParameter(2) << "+/-" << f1->GetParError(2)
-      << '\n';
+  std::cout << "from difference opposite and same charge pions and kaons inv mass: "
+            << '\n'
+            << "k* mass: " << f1->GetParameter(1) << "+/-" << f1->GetParError(1)
+            << '\n'
+            << "k* width: " << f1->GetParameter(2) << "+/-" << f1->GetParError(2)
+            << '\n'
+            << "gauss width: " << f1->GetParameter(0) << "+/-" << f1->GetParError(0)
+            << '\n';
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
 

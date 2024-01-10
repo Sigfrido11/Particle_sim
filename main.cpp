@@ -214,7 +214,7 @@ int main()
   polar_angle->GetXaxis()->SetTitle("angle (rad)");
   polar_angle->GetXaxis()->SetTitleSize(0.045);
 
-  gen_particles->GetXaxis()->SetTitle("pi+-, k+-, p+-, k*");
+  gen_particles->GetXaxis()->SetTitle("particles");
   gen_particles->GetXaxis()->SetTitleSize(0.045);
 
   dec_inv_mass->GetXaxis()->SetTitle("invariant mass (GeV)");
