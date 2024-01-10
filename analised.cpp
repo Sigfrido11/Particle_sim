@@ -78,8 +78,8 @@ void analyse()
   {
     std::cout << "entries in energy histo: unexpected value" << '\n';
   }
-  if (all_inv_mass->GetEntries() < 1e5 * 60 * 119 &&
-      all_inv_mass->GetEntries() > 1e5 * 40 * 79)
+  if (all_inv_mass->GetEntries() < 1e5 * 60 * 119 && //number of combinations of n (maximum)
+      all_inv_mass->GetEntries() > 1e5 * 40 * 79)  //number of combinations of n (minimum)
   {
     std::cout << "entries in gen particles histo: ok" << '\n';
   }
@@ -87,8 +87,8 @@ void analyse()
   {
     std::cout << "entries in gen particles histo: unexpected value" << '\n';
   }
-  if (same_charge_inv_mass->GetEntries() < 1e5 * 70 * 71 &&
-      same_charge_inv_mass->GetEntries() > 1e5 * 45 * 44)
+  if (same_charge_inv_mass->GetEntries() < 1e5 * 70 * 71 && //two times sum of n numbers (maximum)
+      same_charge_inv_mass->GetEntries() > 1e5 * 45 * 44) //two times sum of n numbers (minimum)
   {
     std::cout << "entries in same charge inv mass histo: ok" << '\n';
   }
@@ -97,8 +97,8 @@ void analyse()
     std::cout << "entries in same charge inv mass histo: unexpected value" << same_charge_inv_mass->GetEntries()
               << '\n';
   }
-  if (opposite_charge_inv_mass->GetEntries() < 1e5 * 70 * 50 &&
-      opposite_charge_inv_mass->GetEntries() > 1e5 * 45 * 45)
+  if (opposite_charge_inv_mass->GetEntries() < 1e5 * 70 * 50 && //n positives times n negatives (maximum)
+      opposite_charge_inv_mass->GetEntries() > 1e5 * 45 * 45) //n positives times n negatives (minimum)
   {
     std::cout << "entries in opposite charge inv mass histo: ok" << '\n';
   }
@@ -107,8 +107,8 @@ void analyse()
     std::cout << "entries in opposite charge inv mass histo: unexpected value" << opposite_charge_inv_mass->GetEntries()
               << '\n';
   }
-  if (pi_k_same->GetEntries() < 1e5 * 60 * 25 * 2 &&
-      pi_k_same->GetEntries() > 1e5 * 30 * 3 * 2)
+  if (pi_k_same->GetEntries() < 1e5 * 60 * 25 * 2 && //two times n k same times n pi same (maximum)
+      pi_k_same->GetEntries() > 1e5 * 30 * 3 * 2) //two times n k same times n pi same (minimum)
   {
     std::cout << "entries in pi k same histo: ok" << '\n';
   }
@@ -116,8 +116,8 @@ void analyse()
   {
     std::cout << "entries in pi k same histo: unexpected value" << '\n';
   }
-  if (pi_k_opposite->GetEntries() < 1e5 * 60 * 25 * 2 &&
-      pi_k_opposite->GetEntries() > 1e5 * 30 * 3 * 2)
+  if (pi_k_opposite->GetEntries() < 1e5 * 60 * 25 * 2 && //two times n k opposite times n pi opposite (maximum)
+      pi_k_opposite->GetEntries() > 1e5 * 30 * 3 * 2) //two times n k opposite times n pi opposite (minimum)
   {
     std::cout << "entries in pi k opposite histo: ok" << '\n';
   }
