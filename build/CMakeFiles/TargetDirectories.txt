@@ -1,0 +1,3 @@
+/home/giuseppe/Scrivania/Giuseppe/università/triennale/secondo_anno/labII/particle/build/CMakeFiles/particle_sim.dir
+/home/giuseppe/Scrivania/Giuseppe/università/triennale/secondo_anno/labII/particle/build/CMakeFiles/edit_cache.dir
+/home/giuseppe/Scrivania/Giuseppe/università/triennale/secondo_anno/labII/particle/build/CMakeFiles/rebuild_cache.dir

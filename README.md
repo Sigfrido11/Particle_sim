@@ -99,9 +99,56 @@ Quando viene generata una risonanza:
 Questo è fondamentale per verificare che il picco della risonanza sia ricostruibile anche in presenza di fondo.
 
 ---
-#  Analisi (`analyse.cpp`)
+#  Analisi (`analised.cpp`)
 
 La fase di analisi legge il file ROOT generato e verifica la coerenza fisica e statistica della simulazione.
+
+---
+
+#  Requisiti e installazione di ROOT
+
+Il progetto usa **ROOT** per istogrammi, fit e I/O. Devi avere `root` e `root-config` nel `PATH`. Assicurarsi quindi che sia installato e perfettamente funzionante insieme a cmake. Attenzione per la compilazione potrebbe essere necessario installare ulteriori pacchetti.
+
+#  Compilazione
+
+Si usa CMake (file `CMakeLists.txt` incluso). Da root del progetto:
+
+```bash
+cmake -S . -B build
+cmake --build build -j
+```
+
+Se CMake non trova ROOT, specifica il path:
+
+```bash
+cmake -S . -B build -DROOT_DIR=/percorso/alla/installazione/root
+cmake --build build -j
+```
+
+L’eseguibile risultante è `build/particle_sim`.
+
+---
+
+#  Esecuzione
+
+1. **Generazione degli istogrammi** (crea `histo.root`):
+
+```bash
+./build/particle_sim
+```
+
+2. **Analisi** (macro ROOT):
+
+```bash
+root -l -q analised.cpp
+```
+
+Se preferisci, puoi aprire ROOT e lanciare la funzione:
+
+```bash
+root -l
+root [0] .x analised.cpp
+```
 
 ---
 
@@ -191,4 +238,3 @@ Per farlo si passa attraverso tutte le fasi partendo dalla simulazione in cui ve
 Lo scopo fisico è dimostrare che una risonanza instabile può essere identificata attraverso le sue particelle di decadimento anche in presenza di un grande fondo statistico.
 
 ---
-
