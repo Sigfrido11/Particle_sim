@@ -13,6 +13,7 @@ void setStyle()
 
 void analyse()
 {
+  
   TH1::AddDirectory(kFALSE);
   TFile *file = new TFile("histo.root");
   TH1F *gen_particles = (TH1F *)file->Get("gen_particles");
