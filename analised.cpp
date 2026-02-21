@@ -226,6 +226,7 @@ void analyse()
   std::cout << "ChiSquare/NDF " << f1->GetChisquare() / f1->GetNDF() << '\n';
   std::cout << "probability: " << f1->GetProb() << '\n';
 
+  
   f1 = new TF1("f2", "expo(0)", 0, 1);
   p_module->Fit(f1);
   if ((-f1->GetParameter(1) - 1) / f1->GetParError(1) < 2 &&
