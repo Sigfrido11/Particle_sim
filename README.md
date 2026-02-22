@@ -1,5 +1,26 @@
 # Particle Physics Simulation and K\* Reconstruction
 
+
+#  Requisiti e installazione di ROOT
+
+Il progetto usa **ROOT** per istogrammi, fit e I/O. Devi avere `root` e `root-config` nel `PATH`. Assicurarsi quindi che sia installato e perfettamente funzionante insieme a cmake. Attenzione per la compilazione potrebbe essere necessario installare ulteriori pacchetti.
+
+
+
+2. **Analisi** (macro ROOT):
+
+```bash
+root -l -q analised.cpp
+```
+
+Se preferisci, puoi aprire ROOT e lanciare la funzione:
+
+```bash
+root -l
+root [0] .x analised.cpp
+```
+
+
 #  Compilazione
 
 Si usa CMake (file `CMakeLists.txt` incluso). Da root del progetto:
@@ -130,27 +151,6 @@ Questo è fondamentale per verificare che il picco della risonanza sia ricostrui
 #  Analisi (`analised.cpp`)
 
 La fase di analisi legge il file ROOT generato e verifica la coerenza fisica e statistica della simulazione.
-
----
-
-#  Requisiti e installazione di ROOT
-
-Il progetto usa **ROOT** per istogrammi, fit e I/O. Devi avere `root` e `root-config` nel `PATH`. Assicurarsi quindi che sia installato e perfettamente funzionante insieme a cmake. Attenzione per la compilazione potrebbe essere necessario installare ulteriori pacchetti.
-
-
-
-2. **Analisi** (macro ROOT):
-
-```bash
-root -l -q analised.cpp
-```
-
-Se preferisci, puoi aprire ROOT e lanciare la funzione:
-
-```bash
-root -l
-root [0] .x analised.cpp
-```
 
 ---
 
