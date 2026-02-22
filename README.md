@@ -1,5 +1,33 @@
 # Particle Physics Simulation and K\* Reconstruction
 
+#  Compilazione
+
+Si usa CMake (file `CMakeLists.txt` incluso). Da root del progetto:
+
+```bash
+cmake -S . -B build
+cmake --build build -j
+```
+
+Se CMake non trova ROOT, specifica il path:
+
+```bash
+cmake -S . -B build -DROOT_DIR=/percorso/alla/installazione/root
+cmake --build build -j
+```
+
+L’eseguibile risultante è `build/particle_sim`.
+
+---
+
+#  Esecuzione
+
+1. **Generazione degli istogrammi** (crea `histo.root`):
+
+```bash
+./build/particle_sim
+```
+
 ## Overview
 
 Questo progetto implementa una **simulazione Monte Carlo di eventi di fisica delle particelle** utilizzando ROOT per l’analisi statistica e la visualizzazione dei risultati.
@@ -109,33 +137,7 @@ La fase di analisi legge il file ROOT generato e verifica la coerenza fisica e s
 
 Il progetto usa **ROOT** per istogrammi, fit e I/O. Devi avere `root` e `root-config` nel `PATH`. Assicurarsi quindi che sia installato e perfettamente funzionante insieme a cmake. Attenzione per la compilazione potrebbe essere necessario installare ulteriori pacchetti.
 
-#  Compilazione
 
-Si usa CMake (file `CMakeLists.txt` incluso). Da root del progetto:
-
-```bash
-cmake -S . -B build
-cmake --build build -j
-```
-
-Se CMake non trova ROOT, specifica il path:
-
-```bash
-cmake -S . -B build -DROOT_DIR=/percorso/alla/installazione/root
-cmake --build build -j
-```
-
-L’eseguibile risultante è `build/particle_sim`.
-
----
-
-#  Esecuzione
-
-1. **Generazione degli istogrammi** (crea `histo.root`):
-
-```bash
-./build/particle_sim
-```
 
 2. **Analisi** (macro ROOT):
 
