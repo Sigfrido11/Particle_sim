@@ -8,26 +8,22 @@ Il progetto usa **ROOT** per istogrammi, fit e I/O. Devi avere `root` e `root-co
 
 
 2. **Analisi** (macro ROOT):
+Per eseguire l'analisi aprire ROOT, precedentemente installato, e caricare il programma di analisi per poi eseguire la funzione 'analyse()'.
 
 ```bash
-root -l -q analised.cpp
+.L analised.cpp
+analyse()
 ```
-
-Se preferisci, puoi aprire ROOT e lanciare la funzione:
-
-```bash
-root -l
-root [0] .x analised.cpp
-```
-
 
 #  Compilazione
 
-Si usa CMake (file `CMakeLists.txt` incluso). Da root del progetto:
+Invece per eseguire il main è possibile entrare nella cartella build e compilare il modice usando il CMake (file `CMakeLists.txt` incluso). Da root del progetto:
 
 ```bash
 cmake -S . -B build
 cmake --build build -j
+cd build
+make
 ```
 
 Se CMake non trova ROOT, specifica il path:
